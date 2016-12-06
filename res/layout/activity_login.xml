@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="用户名:" />
+            android:gravity="center_horizontal"
+            android:padding="16dp"
+            android:text="LOGIN TO HELLO"
+            android:textSize="24sp"
+            android:textStyle="bold|italic" />
 
-        <EditText
-            android:id="@+id/editText1"
+        <fragment
+            android:id="@+id/input_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10" >
-        </EditText>
+            class="com.example.helloworld.fragments.inputcells.SimpleTextInputCellFragment"
+            tools:layout="@layout/fragment_inputcell_simpletext" />
+
+        <fragment
+            android:id="@+id/input_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            class="com.example.helloworld.fragments.inputcells.SimpleTextInputCellFragment"
+            tools:layout="@layout/fragment_inputcell_simpletext" />
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
+            android:id="@+id/btn_forgot_password"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="密码:" />
-
-        <EditText
-            android:id="@+id/editText2"
-            android:layout_width="178dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:password="true" />
+            android:layout_gravity="right"
+            android:padding="2dp"
+            android:text="忘记密码？"
+            android:textColor="#00f" />
 
         <Button
             android:id="@+id/btn_login"
@@ -46,7 +51,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:text="没有账户？去注册" />
 
         <Button
@@ -56,6 +61,5 @@
             android:text="GO REGISTER" />
     </LinearLayout>
 
-    <requestFocus />
 
 </FrameLayout>

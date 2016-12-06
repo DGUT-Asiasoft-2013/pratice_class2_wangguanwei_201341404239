@@ -28,7 +28,7 @@ public class SimpleTextInputCellFragment extends Fragment {
 		return view;
 	}
 
-	public void setLabel(String labelText) {
+	public void setLabelText(String labelText) {
 		label.setText(labelText);;
 	}
 

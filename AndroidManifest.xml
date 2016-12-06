@@ -35,6 +35,10 @@
             android:name="com.example.helloworld.HelloWorldActivity"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
         </activity>
+        <activity
+            android:name="com.example.helloworld.RetrieveActivity"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>
