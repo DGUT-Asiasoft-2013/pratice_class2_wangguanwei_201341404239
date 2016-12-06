@@ -13,7 +13,7 @@ import android.view.View;
 public class RetrieveActivity extends Activity {
 	PasswordRecoverStep1Fragment step1 = new PasswordRecoverStep1Fragment();
 	PasswordRecoverStep2Fragment step2 = new PasswordRecoverStep2Fragment();
-	SimpleTextInputCellFragment fragPassword,fragPasswordRepeat,fragEmail;
+//	SimpleTextInputCellFragment fragPassword,fragPasswordRepeat,fragEmail;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +67,11 @@ public class RetrieveActivity extends Activity {
 
 		getFragmentManager()
 		.beginTransaction()		
+		.setCustomAnimations(
+				R.animator.slide_in_right,
+				R.animator.slide_out_left1,
+				R.animator.slide_in_left,
+				R.animator.slide_out_right1)
 		.replace(R.id.container, step2)
 		.addToBackStack(null)
 		.commit();
