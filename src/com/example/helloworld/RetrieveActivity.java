@@ -13,16 +13,13 @@ import android.view.View;
 public class RetrieveActivity extends Activity {
 	PasswordRecoverStep1Fragment step1 = new PasswordRecoverStep1Fragment();
 	PasswordRecoverStep2Fragment step2 = new PasswordRecoverStep2Fragment();
-//	SimpleTextInputCellFragment fragPassword,fragPasswordRepeat,fragEmail;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_retrieve);
-//		fragEmail = (SimpleTextInputCellFragment)getFragmentManager().findFragmentById(R.id.input_email);
-//		fragPassword = (SimpleTextInputCellFragment)getFragmentManager().findFragmentById(R.id.input_password);
-//		fragPasswordRepeat = (SimpleTextInputCellFragment)getFragmentManager().findFragmentById(R.id.input_password_repeat);
 
 //		findViewById(R.id.btn_retrieve).setOnClickListener(new View.OnClickListener() {
 //
@@ -45,19 +42,6 @@ public class RetrieveActivity extends Activity {
 
 	}
 
-//	@Override
-//	protected void onResume() {
-//		super.onResume();
-//
-//		fragEmail.setLabelText("” œ‰:");
-//		fragEmail.setHintText("«Î ‰»Î” œ‰:");
-//
-//		fragEmail.setLabelText("√‹¬Î:");
-//		fragEmail.setHintText("«Î ‰»Î√‹¬Î:");
-//
-//		fragEmail.setLabelText("” œ‰:");
-//		fragEmail.setHintText("«Î ‰»Î‘Ÿ¥Œ ‰»Î√‹¬Î:");
-//	}
 
 //	void gosomewhere(){
 //

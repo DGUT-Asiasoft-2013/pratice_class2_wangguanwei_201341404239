@@ -1,29 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#1F5B8D"
-    android:gravity="center|center_vertical|center_horizontal"
-    android:orientation="vertical"
-    tools:context="${relativePackage}.${activityClass}" >
+    android:layout_height="match_parent" >
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="欢迎登陆！"
-        android:layout_marginTop="150dp" 
-        android:textColor="@android:color/white"
-        android:textSize="16sp" />
-
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:background="#ddf"
+        android:gravity="center"
+        android:text="HELLO WORLD" />
 
     <fragment
-        android:id="@+id/frag_version"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="200dp"
-        class="com.example.helloworld.fragments.VersionFragment"
-        tools:layout="@layout/fragment_version" />
+        android:id="@+id/frag_tabbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        class="com.example.helloworld.fragments.MainTabbarFragment"
+        tools:layout="@layout/fragment_main_tabbar" />
 
-</LinearLayout>
+</FrameLayout>
