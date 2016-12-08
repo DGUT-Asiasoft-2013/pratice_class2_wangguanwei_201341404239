@@ -59,11 +59,11 @@ public class FeedListFragment extends Fragment {
 			View view = null;
 			if(convertView==null){
 				LayoutInflater inflater= LayoutInflater.from(parent.getContext());
-				view =inflater.inflate(android.R.layout.simple_list_item_1, null);
+				view =inflater.inflate(R.layout.feed_list_item_1, null);
 			}else{
 				view = convertView;
 			}
-			TextView text1 = (TextView)view.findViewById(android.R.id.text1);
+			TextView text1 = (TextView)view.findViewById(R.id.text1);
 			text1.setText("THIS ROW IS " +data[position]);
 			
 			return view;
