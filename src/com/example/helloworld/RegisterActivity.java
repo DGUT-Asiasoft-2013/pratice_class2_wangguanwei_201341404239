@@ -2,6 +2,7 @@ package com.example.helloworld;
 
 import java.io.IOException;
 
+import com.example.helloworld.api.Server;
 import com.example.helloworld.fragments.inputcells.PictureInputCellFragment;
 import com.example.helloworld.fragments.inputcells.SimpleTextInputCellFragment;
 
@@ -75,6 +76,11 @@ public class RegisterActivity extends Activity {
 		String password = fragInputCellPassword.getText();
 		String passwordRepeat = fragInputCellPasswordRepeat.getText();
 		if(!password.equals(passwordRepeat)) {
+			new AlertDialog.Builder(this)
+			.setMessage("用户输入的密码不一致")
+			.setIcon(android.R.drawable.ic_dialog_alert)
+			.setPositiveButton("好",null)
+			.show();
 			
 			return;
 		}
@@ -85,7 +91,7 @@ public class RegisterActivity extends Activity {
 		String name = fragInputCellName.getText();
 	
 		
-		OkHttpClient client = new OkHttpClient();
+		OkHttpClient client = Server.getSharedClient();
 		
 		MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder()
 				.addFormDataPart("account", account)
@@ -99,8 +105,7 @@ public class RegisterActivity extends Activity {
 					.create(MediaType.parse("image/png"), fragInputCellAvatar.getPngData()));
 		}
 		
-		Request request = new Request.Builder()
-				.url("http://172.27.0.42:8080/membercenter/api/register")
+		Request request = Server.requestBuilderWithApi("register")
 				.method("post", null).post(requestBodyBuilder.build())
 				.build();
 		
@@ -111,36 +116,23 @@ public class RegisterActivity extends Activity {
 		progressDialog.show();
 		
 		client.newCall(request).enqueue(new Callback() {
-//			@Override
-//			public void onResponse(final Call arg0,final Response arg1)throws IOException{
-//				runOnUiThread(new Runnable() {
-//					public void run() {
-//						try{
-//							progressDialog.dismiss();
-//							RegisterActivity.this.onResponse(arg0, arg1.body().string());
-//						}catch(Exception e){
-//							e.printStackTrace();
-//							RegisterActivity.this.onFailture(arg0, e);
-//						}
-//					}
-//				});
-//			}
+
 			@Override
 			public void onResponse(final Call arg0, final Response arg1) throws IOException {
 				try{
-					final String responseString = arg1.body().string();
 					runOnUiThread(new Runnable() {
 						public void run() {
 							progressDialog.dismiss();
-							RegisterActivity.this.onResponse(arg0, responseString);
+							try {
+								RegisterActivity.this.onResponse(arg0,  arg1.body().string());
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								RegisterActivity.this.onFailure(arg0, e);
+							}
 						}
 					});
 				}catch (final Exception e) {
-					runOnUiThread(new Runnable() {
-						public void run() {
-							RegisterActivity.this.onFailture(arg0, e);
-						}
-					});
+					RegisterActivity.this.onFailure(arg0, e);
 				}
 			}
 			
@@ -149,7 +141,7 @@ public class RegisterActivity extends Activity {
 				runOnUiThread(new Runnable() {
 					public void run() {
 						progressDialog.dismiss();
-						onFailure(arg0, arg1);
+						RegisterActivity.this.onFailure(arg0, arg1);
 					}
 				});
 			}
@@ -170,7 +162,7 @@ public class RegisterActivity extends Activity {
 		.show();
 	}
 	
-	void onFailture(Call arg0, Exception arg1) {
+	void onFailure(Call arg0, Exception arg1) {
 		new AlertDialog.Builder(this)
 		.setTitle("注册失败")
 		.setMessage(arg1.getLocalizedMessage())
