@@ -85,7 +85,7 @@ public class RegisterActivity extends Activity {
 			return;
 		}
 		
-		password = MD5.getMD5(password);
+//		password = MD5.getMD5(password);
 		String account = fragInputCellAccount.getText();
 		String email = fragInputCellEmailAdress.getText();
 		String name = fragInputCellName.getText();
@@ -120,11 +120,12 @@ public class RegisterActivity extends Activity {
 			@Override
 			public void onResponse(final Call arg0, final Response arg1) throws IOException {
 				try{
+					final String responseString = arg1.body().string();
 					runOnUiThread(new Runnable() {
 						public void run() {
 							progressDialog.dismiss();
 							try {
-								RegisterActivity.this.onResponse(arg0,  arg1.body().string());
+								RegisterActivity.this.onResponse(arg0, responseString);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								RegisterActivity.this.onFailure(arg0, e);

@@ -3,6 +3,7 @@ package com.example.helloworld.fragments;
 import com.example.helloworld.R;
 import com.example.helloworld.fragments.inputcells.SimpleTextInputCellFragment;
 
+import android.R.string;
 import android.app.Fragment;
 import android.content.Intent;
 import android.location.Geocoder;
@@ -33,6 +34,10 @@ public class PasswordRecoverStep1Fragment extends Fragment {
 		return view;
 	}
 
+	public String getText(){
+		return fragEmail.getText();
+	}
+	
 	@Override
 	public void onResume() {
 		super.onResume();

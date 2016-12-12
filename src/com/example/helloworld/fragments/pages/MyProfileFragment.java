@@ -6,6 +6,7 @@ import com.example.helloworld.R;
 import com.example.helloworld.RegisterActivity;
 import com.example.helloworld.api.Server;
 import com.example.helloworld.entity.User;
+import com.example.helloworld.fragments.widgets.AvatarView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import android.app.AlertDialog;
@@ -25,6 +26,7 @@ import okhttp3.Response;
 
 public class MyProfileFragment extends Fragment {
 
+	AvatarView avatar;
 	TextView textview;
 	View view;
 	@Override
@@ -33,6 +35,7 @@ public class MyProfileFragment extends Fragment {
 		if(view==null){
 			view= inflater.inflate(R.layout.fragment_page_my_profile, null);
 			textview = (TextView)view.findViewById(R.id.textview1);
+			avatar = (AvatarView) view.findViewById(R.id.avatar);
 		}
 		
 		return view;
@@ -59,7 +62,7 @@ public class MyProfileFragment extends Fragment {
 					
 					@Override
 					public void run() {
-						MyProfileFragment.this.onResponse(arg0, user.getAccount());
+						MyProfileFragment.this.onResponse(arg0, user);
 						
 					}
 				});
@@ -80,12 +83,13 @@ public class MyProfileFragment extends Fragment {
 		});
 	}
 	
-	void onResponse(Call arg0, String responseBody) {
-		textview.setText(responseBody);
+	void onResponse(Call arg0, User user) {
+		avatar.load(user);
+		textview.setText(user.getAccount());
    
 	}
 	
 	void onFailure(Call arg0, Exception arg1) {
-		Toast.makeText(getActivity(), "´íÎó£¡", Toast.LENGTH_SHORT);
+		textview.setText(arg1.getMessage());
 	}
 }

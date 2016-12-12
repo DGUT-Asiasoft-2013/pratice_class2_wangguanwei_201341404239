@@ -86,7 +86,7 @@ public class LoginActivity extends Activity {
 		String account = fragAccount.getText();
 		String password = fragPassword.getText();
 		
-		password = MD5.getMD5(password);
+//		password = MD5.getMD5(password);
 
 		OkHttpClient client = Server.getSharedClient();
 

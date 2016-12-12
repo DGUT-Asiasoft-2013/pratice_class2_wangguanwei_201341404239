@@ -19,12 +19,14 @@ public class Server {
 				.build();
 	}
 	
+    public  static String ServerAdress = "http://172.27.0.53:8080/membercenter/";
+	
 	public static OkHttpClient getSharedClient(){
 		return client;
 	}
 	
 	public static Request.Builder requestBuilderWithApi(String api){
 		return new Request.Builder()
-				.url("http://172.27.0.42:8080/membercenter/api/"+api);
+				.url(ServerAdress+"api/"+api);
 	}
 }

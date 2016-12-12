@@ -1,6 +1,7 @@
 package com.example.helloworld.fragments;
 
 import com.example.helloworld.R;
+import com.example.helloworld.fragments.PasswordRecoverStep1Fragment.OnGoNextListener;
 import com.example.helloworld.fragments.inputcells.SimpleTextInputCellFragment;
 
 import android.app.Fragment;
@@ -22,6 +23,14 @@ public class PasswordRecoverStep2Fragment extends Fragment {
 		fragPassword = (SimpleTextInputCellFragment)getFragmentManager().findFragmentById(R.id.input_password);
 		fragPasswordRepeat = (SimpleTextInputCellFragment)getFragmentManager().findFragmentById(R.id.input_password_repeat);
 
+		view.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				PwdRecover();
+				
+			}
+		});
 		return view;
 	}
 	
@@ -37,6 +46,30 @@ public class PasswordRecoverStep2Fragment extends Fragment {
 
 		fragPasswordRepeat.setLabelText("再次输入密码:");
 		fragPasswordRepeat.setHintText("请输入再次输入密码");
+	}
+	
+	public String getText1(){
+		return fragPasswordRepeat.getText();
+	}
+	
+	public String getText(){
+		return fragPassword.getText();
+	}
+	
+	public static interface OnPwdRecoverListener{
+		void onPwdRecover();
+	}
+
+	OnPwdRecoverListener onPwdRecoverListener;
+
+	public void setOnPwdRecoverListener(OnPwdRecoverListener onPwdRecoverListener) {
+		this.onPwdRecoverListener = onPwdRecoverListener;
+	}
+
+	void PwdRecover(){
+		if(onPwdRecoverListener!=null){
+			onPwdRecoverListener.onPwdRecover();
+		}
 	}
 
 }

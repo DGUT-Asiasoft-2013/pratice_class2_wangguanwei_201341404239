@@ -2,11 +2,13 @@ package com.example.helloworld.entity;
 
 import java.io.Serializable;
 
+import android.R.integer;
 import android.R.string;
+import android.content.Intent;
 
 public class User implements Serializable{
 
-	String id;
+	Integer id;
 	String account;
 	String passwordHash;
 	String name;
@@ -14,10 +16,10 @@ public class User implements Serializable{
 	String avatar;
 	
 	
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getAccount() {
