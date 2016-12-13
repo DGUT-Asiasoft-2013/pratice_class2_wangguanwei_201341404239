@@ -3,6 +3,7 @@ package com.example.helloworld.fragments.widgets;
 import com.example.helloworld.PublishActivity;
 import com.example.helloworld.R;
 
+import android.R.string;
 import android.app.Fragment;
 import android.content.Intent;
 import android.nfc.Tag;
@@ -39,9 +40,9 @@ public class MainTabbarFragment extends Fragment {
 				}
 			});			
 		}
-		
+
 		btnNew.setOnClickListener( new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Intent itnt = new Intent(getActivity(),PublishActivity.class);
@@ -52,23 +53,32 @@ public class MainTabbarFragment extends Fragment {
 
 		return view;
 	}
-	
+
 	public static interface OnTabSelectedListener{
 		void OnTabSelected(int index);
 	}
-	
+
 	OnTabSelectedListener onTabSelectedListener;
 
 	public void setOnTabSelectedListener(OnTabSelectedListener onTabSelectedListener) {
 		this.onTabSelectedListener = onTabSelectedListener;
 	}
-	
+
 	public void setSelectedItem(int index){
 		if(index>=0 && index<tabs.length){
 			onTabClicked(tabs[index]);
 		}
 	}
-	
+
+	public int getSelectedIndex(){
+		for(int i=0;i<tabs.length;i++){
+			if (tabs[i].isSelected()) {
+				return i;
+			}	
+		}
+		return -1;
+	}
+
 	void onTabClicked(View tab){
 		int selectedIndex = -1;
 		for(int i=0;i<tabs.length;i++){
@@ -80,7 +90,7 @@ public class MainTabbarFragment extends Fragment {
 				otherTab.setSelected(false);
 			}
 		}
-		
+
 		if(onTabSelectedListener!=null&&selectedIndex>=0){
 			onTabSelectedListener.OnTabSelected(selectedIndex);
 		}

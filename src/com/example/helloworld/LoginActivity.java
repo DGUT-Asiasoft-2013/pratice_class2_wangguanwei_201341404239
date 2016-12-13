@@ -147,6 +147,7 @@ public class LoginActivity extends Activity {
 			public void onClick(DialogInterface dialog, int which) {
 				Intent itnt = new Intent(LoginActivity.this,HelloWorldActivity.class);
 				startActivity(itnt);
+				
 			}
 		})
 		.show();
