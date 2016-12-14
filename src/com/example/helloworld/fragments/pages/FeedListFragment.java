@@ -141,13 +141,12 @@ public class FeedListFragment extends Fragment {
 			@Override
 			public void onResponse(Call arg0,final Response arg1) throws IOException {
 				try{
-					Page<Article> data = new ObjectMapper()
+					final Page<Article> data = new ObjectMapper()
 							.readValue(arg1.body().string(), new TypeReference<Page<Article>>(){});
-					FeedListFragment.this.page = data.getNumber();
-					FeedListFragment.this.data = data.getContent();
 					getActivity().runOnUiThread(new Runnable() {
 						public void run() {
-
+							FeedListFragment.this.page = data.getNumber();
+							FeedListFragment.this.data = data.getContent();
 							listAdapter.notifyDataSetInvalidated();
 						}
 					});
@@ -194,18 +193,17 @@ public class FeedListFragment extends Fragment {
 				});
 
 				try{
-					Page<Article> feeds = new ObjectMapper().readValue(arg1.body().string(), new TypeReference<Page<Article>>() {});
+					final Page<Article> feeds = new ObjectMapper().readValue(arg1.body().string(), new TypeReference<Page<Article>>() {});
 					if(feeds.getNumber()>page){
-						if(data==null){
-							data = feeds.getContent();
-						}else{
-							data.addAll(feeds.getContent());
-						}
-						page = feeds.getNumber();
+						
 						getActivity().runOnUiThread(new Runnable() {
 							public void run() {
-
-
+								if(data==null){
+									data = feeds.getContent();
+								}else{
+									data.addAll(feeds.getContent());
+								}
+								page = feeds.getNumber();
 								listAdapter.notifyDataSetChanged();
 							}
 						});
@@ -233,6 +231,7 @@ public class FeedListFragment extends Fragment {
 		String authorName = data.get(position).getAuthorName();
 		String date = DateFormat.format("yyyy-MM-dd hh:mm", data.get(position).getCreateDate()).toString();
 		String authorAvatar = data.get(position).getAuthorAvatar();
+		Article content = data.get(position);
 
 		Intent itnt =new Intent(getActivity(),FeedContentActivity.class);
 		itnt.putExtra("Text", text);
@@ -240,6 +239,7 @@ public class FeedListFragment extends Fragment {
 		itnt.putExtra("AuthorName", authorName);
 		itnt.putExtra("Date", date);
 		itnt.putExtra("AuthorAvatar", authorAvatar);
+		itnt.putExtra("Data",content);
 
 		startActivity(itnt);
 	}
