@@ -103,8 +103,8 @@ public class FeedListFragment extends Fragment {
 			AvatarView avatar = (AvatarView)view.findViewById(R.id.avatar);
 
 			Article article = data.get(position);
-			text1.setText(article.getAuthorName() + ": " + article.getTitle());
-			String dateStr = DateFormat.format("yyyy-MM-dd hh:mm", article.getCreateDate()).toString();
+			text1.setText("作者:"+article.getAuthorName() + "标题:" + article.getTitle());
+			String dateStr = DateFormat.format("发表时间:yyyy-MM-dd hh:mm", article.getCreateDate()).toString();
 			text2.setText(dateStr);
 			avatar.load(Server.ServerAdress + article.getAuthorAvatar());
 

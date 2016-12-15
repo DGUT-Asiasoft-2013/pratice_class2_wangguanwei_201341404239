@@ -2,6 +2,8 @@ package com.example.helloworld.fragments.pages;
 
 import java.io.IOException;
 
+import com.example.helloworld.LoginActivity;
+import com.example.helloworld.ModifyPwdActivity;
 import com.example.helloworld.R;
 import com.example.helloworld.RegisterActivity;
 import com.example.helloworld.api.Server;
@@ -12,10 +14,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import okhttp3.Call;
@@ -26,32 +31,58 @@ import okhttp3.Response;
 
 public class MyProfileFragment extends Fragment {
 
+	Button btn_out,btn_change;
 	AvatarView avatar;
 	TextView textview;
 	View view;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		
+
 		if(view==null){
 			view= inflater.inflate(R.layout.fragment_page_my_profile, null);
 			textview = (TextView)view.findViewById(R.id.textview1);
 			avatar = (AvatarView) view.findViewById(R.id.avatar);
+			btn_change=(Button)view.findViewById(R.id.btn_change);
+			btn_out=(Button)view.findViewById(R.id.btn_out);
+
+			btn_change.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					modifypwd();
+				}
+			});
+
+			btn_out.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Intent itnt =new Intent(getActivity(),LoginActivity.class);
+					startActivity(itnt);
+				}
+			});
 		}
-		
+
 		return view;
 	}
+	
+	 void modifypwd() {
+		 Intent intent = new Intent(getActivity(),ModifyPwdActivity.class);
+		 startActivity(intent);
+	 }
+	 
+	
 	@Override
 	public void onResume() {
 		super.onResume();
-		
+
 		OkHttpClient client = Server.getSharedClient();
-		
+
 		Request request =Server.requestBuilderWithApi("me")
 				.method("get", null)
 				.build();
-		
+
 		client.newCall(request).enqueue(new Callback() {
-			
+
 			@Override
 			public void onResponse(final Call arg0, final Response arg1) throws IOException {
 
@@ -59,16 +90,16 @@ public class MyProfileFragment extends Fragment {
 				final User user = objectMapper.readValue(arg1.body().string(), User.class);
 
 				getActivity().runOnUiThread(new Runnable() {
-					
+
 					@Override
 					public void run() {
 						MyProfileFragment.this.onResponse(arg0, user);
-						
+
 					}
 				});
-				
+
 			}
-			
+
 			@Override
 			public void onFailure(final Call arg0, final IOException arg1) {
 
@@ -78,17 +109,17 @@ public class MyProfileFragment extends Fragment {
 						MyProfileFragment.this.onFailure(arg0, arg1);
 					}
 				};
-				
+
 			}
 		});
 	}
-	
+
 	void onResponse(Call arg0, User user) {
 		avatar.load(user);
 		textview.setText(user.getAccount());
-   
+
 	}
-	
+
 	void onFailure(Call arg0, Exception arg1) {
 		textview.setText(arg1.getMessage());
 	}

@@ -21,7 +21,7 @@
             android:layout_height="55dp"
             android:gravity="left"
             android:text="TextView"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/text2"

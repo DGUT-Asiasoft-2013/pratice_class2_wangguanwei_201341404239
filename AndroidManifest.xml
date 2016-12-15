@@ -8,9 +8,8 @@
         android:minSdkVersion="19"
         android:targetSdkVersion="19" />
 
-    
-    <uses-permission android:name="android.permission.INTERNET"/>
-    
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -36,7 +35,8 @@
         </activity>
         <activity
             android:name="com.example.helloworld.HelloWorldActivity"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name="com.example.helloworld.RetrieveActivity"
@@ -52,6 +52,14 @@
         </activity>
         <activity
             android:name="com.example.helloworld.AddCommentActivity"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.example.helloworld.NotesContentActivity"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.example.helloworld.ModifyPwdActivity"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
         </activity>
     </application>

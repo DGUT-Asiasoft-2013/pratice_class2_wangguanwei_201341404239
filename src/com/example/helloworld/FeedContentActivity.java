@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,6 +110,8 @@ public class FeedContentActivity extends Activity {
 		super.onResume();
 		reload();
 	}
+
+	//定义适配器将解析的评论添加到listview
 	BaseAdapter listAdapter = new BaseAdapter() {
 
 		@Override
@@ -155,7 +158,7 @@ public class FeedContentActivity extends Activity {
 
 	private boolean isLiked;
 
-	//检查赞按钮是否被选中
+	//判断赞按钮是否被选中
 	void checkLiked(){
 		Request request = Server.requestBuilderWithApi("article/"+article.getId()+"/isliked").get().build();
 		Server.getSharedClient().newCall(request).enqueue(new Callback() {
@@ -194,14 +197,14 @@ public class FeedContentActivity extends Activity {
 			}
 		});
 	}
-	
-	//检查赞按钮是否被选中返回的结果
+
+	//根据赞按钮是否被选中返回结果改变赞的颜色
 	void onCheckLikedResult(boolean result){
 		isLiked =result;
 		btn_like.setTextColor(result? Color.BLUE:Color.BLACK);
 	}
 
-	//更新显示赞的数量
+	//提取返回赞的数量
 	void reloadLikes(){
 		Request request =Server.requestBuilderWithApi("article/"+article.getId()+"/likes").get().build();
 		Server.getSharedClient().newCall(request).enqueue(new Callback() {
@@ -244,6 +247,7 @@ public class FeedContentActivity extends Activity {
 		});
 	}
 
+	//根据返回的赞的数量改变点赞按钮的数量显示
 	void onReloadLikesResult(int count){
 		if(count>0){
 			btn_like.setText("赞("+count+")");
@@ -251,17 +255,18 @@ public class FeedContentActivity extends Activity {
 			btn_like.setText("赞");
 		}
 	}
-	
+
+	//判断当前用户是否点赞
 	void toggleLikes(){
 		MultipartBody body = new MultipartBody.Builder()
 				.addFormDataPart("likes", String.valueOf(!isLiked))
 				.build(); 
-		
+
 		Request request = Server.requestBuilderWithApi("article/"+article.getId()+"/likes")
 				.post(body).build();
-		
+
 		Server.getSharedClient().newCall(request).enqueue(new Callback() {
-			
+
 			@Override
 			public void onResponse(Call arg0, Response arg1) throws IOException {
 				runOnUiThread(new Runnable() {
@@ -270,7 +275,7 @@ public class FeedContentActivity extends Activity {
 					}
 				});
 			}
-			
+
 			@Override
 			public void onFailure(Call arg0, IOException arg1) {
 				runOnUiThread(new Runnable() {
@@ -279,8 +284,10 @@ public class FeedContentActivity extends Activity {
 					}
 				});
 			}
-});
+		});
 	}
+
+	//更新点赞和评论的显示
 	void reload(){
 		reloadLikes();
 		checkLiked();
@@ -329,6 +336,7 @@ public class FeedContentActivity extends Activity {
 		});
 	}
 
+    //加载更多
 	void loadmore(){
 
 		btnLoadMore.setEnabled(false);
@@ -380,6 +388,7 @@ public class FeedContentActivity extends Activity {
 
 	}
 
+	//跳转传参
 	void makeComment(){
 		Intent itnt =new Intent(FeedContentActivity.this,AddCommentActivity.class);
 		itnt.putExtra("data",article);

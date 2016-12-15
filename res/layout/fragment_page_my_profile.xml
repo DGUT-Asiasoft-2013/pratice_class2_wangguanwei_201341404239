@@ -18,4 +18,25 @@
         android:layout_marginTop="150dp"
         android:text="user" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="180dp">
+
+        <Button
+            android:id="@+id/btn_change"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="50dp"
+            android:text="修改密码" />
+
+        <Button
+            android:id="@+id/btn_out"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="50dp"
+            android:text="注销" />
+    </LinearLayout>
+
 </FrameLayout>
