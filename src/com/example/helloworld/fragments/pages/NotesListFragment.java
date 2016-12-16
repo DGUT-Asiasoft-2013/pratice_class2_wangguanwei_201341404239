@@ -14,16 +14,20 @@ import com.example.helloworld.fragments.widgets.AvatarView;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import android.R.color;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import okhttp3.Call;
@@ -33,6 +37,7 @@ import okhttp3.Response;
 
 public class NotesListFragment extends Fragment {
 
+	String selected;
 	ListView listView;
 	View view;
 
@@ -42,6 +47,7 @@ public class NotesListFragment extends Fragment {
 	List<Comment> data;
 	int page =0;
 
+	Button btn_tome,btn_my;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -54,6 +60,9 @@ public class NotesListFragment extends Fragment {
 			listView.addFooterView(btnLoadMore);
 			listView.setAdapter(listAdapter);
 
+			btn_my=(Button)view.findViewById(R.id.btn_mycomment);
+			btn_tome=(Button)view.findViewById(R.id.btn_commentTome);
+			
 			btnLoadMore.setOnClickListener(new View.OnClickListener() {
 
 				@Override
@@ -61,7 +70,21 @@ public class NotesListFragment extends Fragment {
 					loadmore();
 				}
 			});		
-			
+
+			btn_tome.setOnClickListener(new OnClickListener() {
+				public void onClick(View v) {
+					commentTome();
+				}
+			});
+
+			btn_my.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					commentOfme();
+
+				}
+			});
+
 			listView.setOnItemClickListener(new  AdapterView.OnItemClickListener() {
 
 				@Override
@@ -78,12 +101,25 @@ public class NotesListFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+	}
+
+	void commentTome(){
+		btn_tome.setTextColor(Color.BLUE);
+		btn_my.setTextColor(Color.BLACK);
+		selected ="allcomments";
+		reload();
+	}
+
+	void commentOfme(){
+		btn_tome.setTextColor(Color.BLACK);
+		btn_my.setTextColor(Color.BLUE);
+		selected ="mycomments";
 		reload();
 	}
 
 	void reload(){
 		page=0;
-		Request request = Server.requestBuilderWithApi("article/allcomments/"+page)
+		Request request = Server.requestBuilderWithApi("article/"+selected+"/"+page)
 				.method("GET", null)
 				.build();
 
@@ -132,7 +168,7 @@ public class NotesListFragment extends Fragment {
 		btnLoadMore.setEnabled(false);
 		textLoadMore.setText("‘ÿ»Î÷–°≠");
 
-		Request request = Server.requestBuilderWithApi("article/allcomments/"+(page+1)).get().build();
+		Request request = Server.requestBuilderWithApi("article/"+selected+"/"+(page+1)).get().build();
 		Server.getSharedClient().newCall(request).enqueue(new Callback() {
 			@Override
 			public void onResponse(Call arg0, Response arg1) throws IOException {
@@ -219,8 +255,8 @@ public class NotesListFragment extends Fragment {
 		}
 	};
 
-    void onItemClicked(int position){
-    	String title = data.get(position).getArticle().getTitle();
+	void onItemClicked(int position){
+		String title = data.get(position).getArticle().getTitle();
 		String text = data.get(position).getText();
 		String authorName = data.get(position).getArticle().getAuthorName();
 		String date = DateFormat.format("yyyy-MM-dd hh:mm", data.get(position).getCreateDate()).toString();
@@ -234,7 +270,7 @@ public class NotesListFragment extends Fragment {
 		itnt.putExtra("AuthorAvatar", authorAvatar);
 
 		startActivity(itnt);
-    	
-    }
+
+	}
 
 }

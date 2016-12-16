@@ -27,7 +27,28 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="44dp"
-         />
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="44dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_commentTome"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.5"
+            android:text="对我的评论" />
+
+        <Button
+            android:id="@+id/btn_mycomment"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.5"
+            android:text="我发表的评论" />
+    </LinearLayout>
 
 </FrameLayout>
